@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tiên ngu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <main class="home">
+        <h1 id="homeTitle">Happy Birthday<small id="homeSub">zui zui</small></h1>
+        <div class="grid">
+            <button class="tile" data-open="music"><span>🎵</span>nhạt nhẽo</button>
+            <button class="tile" data-open="wish"><span>💌</span>lời ko thật lòng</button>
+            <button class="tile" data-open="photo"><span>📸</span>cũng cũng</button>
+            <button class="tile" data-open="gift"><span>🎁</span>bất ngờ các thứ</button>
+        </div>
+    </main>
+
+    <!-- MUSIC -->
+    <div class="overlay" id="music">
+        <div class="modal">
+            <button class="close">✕</button>
+            <div class="mtitle">♪ Nhạc của tiên</div>
+            <div class="cover" id="cover">🎶</div>
+            <div class="song-name" id="sName">Choose a song</div>
+            <div class="song-artist" id="sArtist">&nbsp;</div>
+            <div class="bar"><span id="cur">0:00</span><input type="range" id="seek" min="0" max="100" value="0"><span
+                    id="dur">0:00</span></div>
+            <div class="ctrl"><button id="prev">⏮</button><button class="play" id="play">▶</button><button
+                    id="next">⏭</button></div>
+            <div class="list" id="list"></div>
+        </div>
+    </div>
+
+    <!-- WISH -->
+    <div class="overlay" id="wish">
+        <div class="modal">
+            <button class="close">✕</button>
+            <div class="wish">
+                <h2 id="wTitle"></h2>
+                <div class="wish-body" id="wBody"></div><div class="sign" id="wSign"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="overlay" id="photo">
+        <div class="modal wide">
+            <button class="close">✕</button>
+            <div class="mtitle">Happy new year</div>
+            <div class="ptitle" id="pTop"></div>
+            <div class="marquee">
+                <div class="track-row" id="row1"></div>
+            </div>
+            <div class="marquee rev">
+                <div class="track-row" id="row2"></div>
+            </div>
+            <div class="ptitle" id="pBottom"></div>
+        </div>
+    </div>
+
+    <!-- GIFT -->
+    <div class="overlay" id="gift">
+        <div class="modal wide">
+            <button class="close">✕</button>
+            <div class="mtitle">🎁 bùm wao wao</div>
+            <div class="giftbox" id="giftBox"></div>
+            <div class="hint" id="giftHint"></div>
+        </div>
+    </div>
+
+    <!-- LOCK SCREEN -->
+    <div class="lock" id="lock">
+        <div class="lock-card" id="lockCard">
+            <div class="lock-img" id="lockImg"></div>
+            <div class="lock-pad">
+                <div class="lock-heart">❤</div>
+                <p class="lock-hint" id="lockHint"></p>
+                <div class="dots" id="dots"></div>
+                <div class="keys" id="keys"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

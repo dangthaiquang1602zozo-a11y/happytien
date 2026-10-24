@@ -1,0 +1,744 @@
+:root {
+    --p1: #ff8fb1;
+    --p2: #ffc2d6;
+    --p3: #ffe3ec;
+    --deep: #d6195c;
+    --ink: #7a1038;
+    --glass: rgba(255, 255, 255, .55)
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #ffd1e0, #ff9ebd 50%, #ffc2d6);
+    background-attachment: fixed
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    opacity: .35;
+    pointer-events: none;
+    background: repeating-conic-gradient(rgba(11, 10, 10, 0.5) 0 25%, transparent 0 50%) 0 0/46px 46px
+}
+
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden
+}
+
+.hearts i {
+    position: absolute;
+    top: -50px;
+    font-style: normal;
+    opacity: .9;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to   { transform: translate(var(--dx), 110vh) rotate(var(--rot)); }
+}
+
+/* ===== HOME ===== */
+.home {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+    gap: 26px
+}
+
+.home h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    color: var(--deep);
+    text-align: center;
+    text-shadow: 0 3px 0 rgba(22, 19, 19, 0.533)
+}
+
+.home h1 small {
+    display: block;
+    font-family: 'Quicksand';
+    font-size: .9rem;
+    letter-spacing: .35em;
+    color: var(--ink);
+    opacity: .7;
+    margin-top: 6px
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(130px, 200px));
+    gap: 18px
+}
+
+.tile {
+    all: unset;
+    cursor: pointer;
+    aspect-ratio: 1;
+    border-radius: 28px;
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 2px solid #fff9;
+    box-shadow: 0 12px 30px rgba(214, 25, 92, .22);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    transition: .25s
+}
+
+.tile:hover,
+.tile:focus-visible {
+    transform: translateY(-6px) scale(1.04);
+    background: #fffc
+}
+
+.tile span {
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 6px #d6195c55)
+}
+
+/* ===== MODAL ===== */
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(122, 16, 56, .35);
+    backdrop-filter: blur(8px);
+    z-index: 10
+}
+
+.overlay.open {
+    display: flex;
+    animation: fade .25s
+}
+
+@keyframes fade {
+    from {
+        opacity: 0
+    }
+}
+
+.modal {
+    position: relative;
+    width: min(440px, 100%);
+    max-height: 92vh;
+    overflow: auto;
+    border-radius: 28px;
+    padding: 22px 20px;
+    background: rgba(255, 240, 245, .78);
+    border: 2px solid #fff;
+    box-shadow: 0 20px 60px rgba(122, 16, 56, .4);
+    animation: pop .3s
+}
+
+.modal.wide {
+    width: min(720px, 100%)
+}
+
+@keyframes pop {
+    from {
+        transform: scale(.9);
+        opacity: 0
+    }
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--deep);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 2
+}
+
+.mtitle {
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: .18em;
+    font-size: .8rem;
+    color: var(--deep);
+    margin-bottom: 14px;
+    text-transform: uppercase
+}
+
+/* ===== MUSIC ===== */
+.cover {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 12px;
+    border-radius: 24px;
+    border: 3px solid #fff;
+    box-shadow: 0 10px 24px #d6195c40;
+    background: linear-gradient(135deg, var(--p1), var(--p2)) center/cover;
+    display: grid;
+    place-items: center;
+    font-size: 3.4rem
+}
+
+.cover.spin {
+    animation: bob 3s ease-in-out infinite
+}
+
+@keyframes bob {
+    50% {
+        transform: translateY(-6px) rotate(1.5deg)
+    }
+}
+
+.song-name {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--deep)
+}
+
+.song-artist {
+    text-align: center;
+    font-size: .85rem;
+    opacity: .7;
+    margin-bottom: 10px
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .75rem;
+    font-weight: 700
+}
+
+.bar input {
+    flex: 1;
+    accent-color: var(--deep);
+    height: 4px
+}
+
+.ctrl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin: 10px 0 14px
+}
+
+.ctrl button {
+    border: 0;
+    cursor: pointer;
+    background: none;
+    color: var(--p1);
+    font-size: 1.4rem
+}
+
+.ctrl button:hover {
+    color: var(--deep)
+}
+
+.ctrl .play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--deep);
+    color: #fff;
+    font-size: 1.4rem;
+    box-shadow: 0 8px 18px #d6195c66
+}
+
+.ctrl .play:hover {
+    color: #fff;
+    transform: scale(1.08)
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.track {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 16px;
+    background: #fff9;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: .2s
+}
+
+.track:hover {
+    background: #fff
+}
+
+.track.active {
+    border-color: var(--deep);
+    background: #fff
+}
+
+.track .th {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--p1), var(--p2)) center/cover;
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem
+}
+
+.track b {
+    font-size: .9rem;
+    display: block
+}
+
+.track small {
+    opacity: .65
+}
+
+.track .eq {
+    margin-left: auto;
+    color: var(--deep);
+    font-size: .9rem;
+    opacity: 0
+}
+
+.track.active .eq {
+    opacity: 1
+}
+
+/* ===== PHOTOS ===== */
+.ptitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--deep);
+    text-align: center;
+    margin-bottom: 10px
+}
+
+.marquee {
+    overflow: hidden;
+    padding: 12px 0;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)
+}
+
+.track-row {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: left 28s linear infinite
+}
+
+.marquee.rev .track-row {
+    animation-name: right;
+    animation-duration: 34s
+}
+
+.marquee:hover .track-row {
+    animation-play-state: paused
+}
+
+@keyframes left {
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+@keyframes right {
+    from {
+        transform: translateX(-50%)
+    }
+
+    to {
+        transform: translateX(0)
+    }
+}
+
+.photo {
+    width: 130px;
+    height: 170px;
+    flex: none;
+    border-radius: 16px;
+    border: 4px solid #fff;
+    box-shadow: 0 8px 18px #d6195c40;
+    background: linear-gradient(135deg, var(--p1), var(--p2)) center/cover;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: #fff;
+    transition: .25s
+}
+
+.photo:nth-child(odd) {
+    transform: rotate(-3deg)
+}
+
+.photo:nth-child(even) {
+    transform: rotate(3deg)
+}
+
+.photo:hover {
+    transform: scale(1.12) rotate(0);
+    z-index: 2
+}
+
+@media(min-width:640px) {
+    .photo {
+        width: 160px;
+        height: 210px
+    }
+}
+
+/* ===== WISH ===== */
+.wish {
+    position: relative;
+    padding: 34px 26px;
+    border-radius: 22px;
+    background: #fffafc;
+    text-align: center;
+    border: 3px double var(--p1);
+    outline: 2px solid #fff;
+    outline-offset: -10px;
+    box-shadow: inset 0 0 40px #ffd1e0
+}
+
+.wish::before,
+.wish::after {
+    position: absolute;
+    font-size: 1.8rem
+}
+
+.wish::before {
+    content: "🌸";
+    top: 8px;
+    left: 12px
+}
+
+.wish::after {
+    content: "🌸";
+    bottom: 8px;
+    right: 12px
+}
+
+.wish h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.1rem;
+    color: var(--deep);
+    margin-bottom: 12px
+}
+
+.wish h2::after {
+    content: "❤";
+    display: block;
+    font-size: 1rem;
+    margin-top: 4px
+}
+
+.wish-body {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.35rem;
+    line-height: 1.7;
+    max-height: 48vh;
+    overflow: auto;
+    padding: 0 6px
+}
+
+.wish-body p {
+    margin-bottom: .8em
+}
+
+.sign {
+    margin-top: 12px;
+    font-family: 'Dancing Script';
+    font-size: 1.4rem;
+    color: var(--deep);
+    text-align: right
+}
+
+/* ===== GIFT ===== */
+.giftbox {
+    position: relative;
+    border-radius: 22px;
+    padding: 14px;
+    background: linear-gradient(135deg, #fff, #ffe3ec);
+    border: 3px solid #fff;
+    box-shadow: inset 0 0 0 3px var(--p1)
+}
+
+.giftbox::before {
+    content: "🎀";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.2rem;
+    z-index: 1
+}
+
+.vid {
+    aspect-ratio: 16/9;
+    width: 100%;
+    border-radius: 14px;
+    background: #2b0715;
+    display: block;
+    object-fit: cover
+}
+
+.vid-empty {
+    aspect-ratio: 16/9;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-weight: 700;
+    background: repeating-linear-gradient(45deg, #ffd1e0 0 14px, #ffc2d6 14px 28px);
+    color: var(--deep);
+    font-size: 1rem
+}
+
+.vid-empty span {
+    display: block;
+    font-size: 3rem;
+    animation: bob 2s ease-in-out infinite
+}
+
+.hint {
+    text-align: center;
+    margin-top: 10px;
+    font-size: .85rem;
+    opacity: .7
+}
+
+/* ===== LOCK SCREEN ===== */
+.lock {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: linear-gradient(135deg, #ffd1e0, #ff9ebd 50%, #ffc2d6);
+    transition: opacity .6s, transform .6s
+}
+
+.lock::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .35;
+    pointer-events: none;
+    background: repeating-conic-gradient(rgba(255, 255, 255, .5) 0 25%, transparent 0 50%) 0 0/46px 46px
+}
+
+.lock.hide {
+    opacity: 0;
+    transform: scale(1.08);
+    pointer-events: none
+}
+
+.lock-card {
+    position: relative;
+    display: flex;
+    gap: 26px;
+    align-items: center;
+    width: min(780px, 100%);
+    padding: 26px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(12px);
+    border: 2px solid #fff9;
+    box-shadow: 0 20px 50px rgba(214, 25, 92, .3)
+}
+
+.lock-card.shake {
+    animation: shake .45s
+}
+
+@keyframes shake {
+
+    20%,
+    60% {
+        transform: translateX(-12px)
+    }
+
+    40%,
+    80% {
+        transform: translateX(12px)
+    }
+}
+
+.lock-img {
+    flex: 1;
+    min-height: 340px;
+    align-self: stretch;
+    border-radius: 22px;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 24px #d6195c40;
+    background: linear-gradient(135deg, var(--p1), var(--p2)) center/cover
+}
+
+.lock-pad {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px
+}
+
+.lock-heart {
+    font-size: 2.4rem;
+    color: var(--deep);
+    animation: beat 1.2s infinite
+}
+
+@keyframes beat {
+    50% {
+        transform: scale(1.2)
+    }
+}
+
+.lock-hint {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.35rem;
+    color: var(--deep);
+    text-align: center
+}
+
+.dots {
+    display: flex;
+    gap: 12px;
+    height: 16px
+}
+
+.dots i {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--deep);
+    transition: .2s
+}
+
+.dots i.on {
+    background: var(--deep);
+    transform: scale(1.15)
+}
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(3, 56px);
+    gap: 12px
+}
+
+.key {
+    width: 56px;
+    height: 56px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font: 700 1.2rem 'Quicksand', sans-serif;
+    background: #ffe3ecdd;
+    color: var(--deep);
+    box-shadow: 0 4px 10px #d6195c33;
+    transition: .15s
+}
+
+.key:hover {
+    background: #fff;
+    transform: scale(1.08)
+}
+
+.key:active {
+    background: var(--deep);
+    color: #fff
+}
+
+.key.ghost {
+    visibility: hidden
+}
+
+@media(max-width:620px) {
+    .lock-card {
+        flex-direction: column;
+        padding: 18px
+    }
+
+    .lock-img {
+        min-height: 220px;
+        width: 100%;
+        flex: none
+    }
+}
+
+/* ===== TỐI ƯU ĐIỆN THOẠI ===== */
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+
+/* Kính mờ trên iPhone */
+.tile      { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.overlay   { -webkit-backdrop-filter: blur(8px);  backdrop-filter: blur(8px); }
+.lock-card { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+
+/* Chiều cao đúng với thanh địa chỉ điện thoại */
+.modal { max-height: 90dvh; }
+.home { padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+
+/* Màn hình khóa không bị tràn */
+.lock { overflow-y: auto; }
+.lock-card { margin: auto; }
+
+/* Dễ chạm hơn */
+.close { width: 40px; height: 40px; }
+.bar input[type=range] { height: 28px; }
+
+/* Bỏ hiệu ứng hover trên màn hình cảm ứng */
+@media (hover: none) {
+  .tile:hover, .key:hover, .photo:hover { transform: none; }
+  .track:hover { background: #fff9; }
+}
+
+@media (max-width: 620px) {
+  .lock { padding: 10px; }
+  .lock-card { gap: 10px; padding: 14px; border-radius: 24px; }
+  .lock-img { min-height: 140px; height: 22dvh; }
+  .lock-pad { gap: 8px; }
+  .lock-heart { font-size: 1.8rem; }
+  .lock-hint { font-size: 1.1rem; }
+  .keys { gap: 9px; grid-template-columns: repeat(3, 52px); }
+  .key { width: 52px; height: 52px; }
+
+  .home h1 { font-size: 2.4rem; }
+  .cover { width: 140px; height: 140px; }
+  .wish { padding: 28px 18px; }
+  .wish-body { font-size: 1.2rem; max-height: 52dvh; }
+  .modal { padding: 18px 14px; }
+}
